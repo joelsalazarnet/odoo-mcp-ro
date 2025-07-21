@@ -1,6 +1,6 @@
 # MCP Server for Odoo
 
-A read-only Model Context Protocol (MCP) server for Odoo ERP integration. Enables AI assistants to safely query and explore Odoo data.
+A minimal read-only Model Context Protocol (MCP) server for Odoo ERP integration. Enables AI assistants to safely query and explore Odoo data.
 
 ## Available Tools
 
