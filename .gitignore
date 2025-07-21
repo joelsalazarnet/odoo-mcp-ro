@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Package locks (can cause conflicts)
+package-lock.json
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
