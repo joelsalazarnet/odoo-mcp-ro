@@ -1,7 +1,7 @@
 {
   "name": "odoo-mcp-ro",
   "version": "0.1.0",
-  "description": "Read-only MCP server for Odoo ERP integration - enables AI assistants to query and explore Odoo data",
+  "description": "Read-only MCP server for Odoo ERP integration",
   "main": "index.js",
   "bin": {
     "odoo-mcp-ro": "./index.js"
@@ -12,29 +12,14 @@
   "keywords": [
     "mcp",
     "odoo",
-    "erp",
-    "ai",
     "model-context-protocol"
   ],
   "author": "Joel Salazar",
   "license": "CC-BY-NC-SA-4.0",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.6.0",
-    "xmlrpc": "^1.3.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/joelsalazarnet/odoo-mcp-ro.git"
-  },
-  "bugs": {
-    "url": "https://github.com/joelsalazarnet/odoo-mcp-ro/issues"
-  },
-  "homepage": "https://github.com/joelsalazarnet/odoo-mcp-ro#readme",
-  "preferGlobal": true,
-  "files": [
-    "index.js"
-  ]
+    "@modelcontextprotocol/sdk": "^1.16.0"
+  }
 }

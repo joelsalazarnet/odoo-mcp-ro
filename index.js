@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 
 /**
- * Minimal MCP server for Odoo integration
+ * Minimal MCP server for Odoo integration using JSON-RPC
  */
 
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
 const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
-const xmlrpc = require('xmlrpc');
-const { URL } = require('url');
 
 class OdooClient {
   constructor({ url, database, username, password, apiKey, timeout = 120 }) {
@@ -20,45 +18,82 @@ class OdooClient {
     this.database = database;
     this.username = username;
     this.password = apiKey || password;
-    this.timeout = timeout;
+    this.timeout = timeout * 1000; // Convert to milliseconds
     this.uid = null;
+  }
 
-    // Initialize XML-RPC clients
-    const commonUrl = new URL('/xmlrpc/2/common', this.url);
-    const objectUrl = new URL('/xmlrpc/2/object', this.url);
-
-    const clientOptions = {
-      host: commonUrl.hostname,
-      port: commonUrl.port || (commonUrl.protocol === 'https:' ? 443 : 80),
-      timeout: this.timeout * 1000
+  async jsonRpcCall(service, method, params) {
+    const url = `${this.url}/jsonrpc`;
+    const payload = {
+      jsonrpc: '2.0',
+      method: 'call',
+      params: {
+        service,
+        method,
+        args: params
+      },
+      id: Math.floor(Math.random() * 1000000)
     };
 
-    this.common = xmlrpc.createClient({ ...clientOptions, path: commonUrl.pathname });
-    this.models = xmlrpc.createClient({ ...clientOptions, path: objectUrl.pathname });
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(this.timeout)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.error) {
+        throw new Error(`Odoo Error: ${result.error.message || result.error.data?.message || 'Unknown error'}`);
+      }
+
+      return result.result;
+    } catch (error) {
+      if (error.name === 'TimeoutError') {
+        throw new Error('Request timeout');
+      }
+      throw error;
+    }
   }
 
   async authenticate() {
     if (this.uid) return this.uid;
     
-    return new Promise((resolve, reject) => {
-      this.common.methodCall('authenticate', [this.database, this.username, this.password, {}], 
-        (error, value) => {
-          if (error) return reject(new Error(`Connection failed: ${error.message}`));
-          if (!value) return reject(new Error('Authentication failed: Invalid credentials'));
-          this.uid = value;
-          resolve(value);
-        });
-    });
+    const result = await this.jsonRpcCall('common', 'authenticate', [
+      this.database, 
+      this.username, 
+      this.password, 
+      {}
+    ]);
+    
+    if (!result) {
+      throw new Error('Authentication failed: Invalid credentials');
+    }
+    
+    this.uid = result;
+    return result;
   }
 
   async execute(model, method, args = [], kwargs = {}) {
     const uid = await this.authenticate();
     
-    return new Promise((resolve, reject) => {
-      this.models.methodCall('execute_kw', [this.database, uid, this.password, model, method, args, kwargs], 
-        (error, value) => error ? reject(new Error(`${method} failed: ${error.message}`)) : resolve(value)
-      );
-    });
+    return this.jsonRpcCall('object', 'execute_kw', [
+      this.database, 
+      uid, 
+      this.password, 
+      model, 
+      method, 
+      args, 
+      kwargs
+    ]);
   }
 
   async searchRead(model, domain = [], { fields = null, offset = 0, limit = null, order = null } = {}) {
