@@ -1,6 +1,6 @@
 # MCP Server for Odoo
 
-A minimal read-only Model Context Protocol (MCP) server for Odoo ERP integration. Enables AI assistants to safely query and explore Odoo data.
+A minimal read-only Model Context Protocol (MCP) server for Odoo ERP integration written in TypeScript. Enables AI assistants to safely query and explore Odoo data.
 
 ## Available Tools
 
@@ -20,19 +20,27 @@ A minimal read-only Model Context Protocol (MCP) server for Odoo ERP integration
 ## Installation
 
 ### Prerequisites
-- **Node.js**: Version 16.0.0 or higher
+- **Node.js**: Version 20.0.0 or higher
+- **npm**: For package management
 
-### Usage
-
-```bash
-npx odoo-mcp-ro
-```
-
-Or install globally:
+### Development
 
 ```bash
-npm install -g odoo-mcp-ro
-odoo-mcp-ro
+# Clone the repository
+git clone <repository-url>
+cd odoo-mcp-ro
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Run in development mode (with TypeScript)
+npm run dev
+
+# Run the built version
+npm start
 ```
 
 ## Environment Configuration

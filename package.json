@@ -2,12 +2,15 @@
   "name": "odoo-mcp-ro",
   "version": "0.1.0",
   "description": "Read-only MCP server for Odoo ERP integration",
-  "main": "index.js",
+  "main": "dist/index.js",
   "bin": {
-    "odoo-mcp-ro": "./index.js"
+    "odoo-mcp-ro": "./dist/index.js"
   },
   "scripts": {
-    "start": "node index.js"
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "prepare": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -20,6 +23,12 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.16.0"
+    "@modelcontextprotocol/sdk": "^1.16.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
   }
 }
