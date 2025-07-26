@@ -1,6 +1,6 @@
 {
   "name": "odoo-mcp-ro",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Read-only MCP server for Odoo ERP integration",
   "main": "dist/index.js",
   "bin": {
