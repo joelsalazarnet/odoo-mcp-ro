@@ -27,7 +27,7 @@ A minimal read-only Model Context Protocol (MCP) server for Odoo ERP integration
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/joelsalazarnet/odoo-mcp-ro
 cd odoo-mcp-ro
 
 # Install dependencies
@@ -41,17 +41,6 @@ npm run dev
 
 # Run the built version
 npm start
-```
-
-## Environment Configuration
-
-Set the following environment variables:
-
-```bash
-ODOO_URL=https://your-instance.odoo.com
-ODOO_DB=your-database
-ODOO_USERNAME=your-email@example.com
-ODOO_API_KEY=your-api-key
 ```
 
 ## Claude Desktop Setup
@@ -77,28 +66,21 @@ Add to your claude_desktop_config.json file:
 
 ## License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
 
-You are free to:
+### GNU General Public License v3.0
 
-- **Share** — copy and redistribute the material in any medium or format
-- **Adapt** — remix, transform, and build upon the material
+Copyright (c) 2025 ODOO-MCP-RO
 
-Under the following terms:
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-- **Attribution** — You must give appropriate credit, provide a link to the license, and indicate if changes were made
-- **NonCommercial** — You may not use the material for commercial purposes
-- **ShareAlike** — If you remix, transform, or build upon the material, you must distribute your contributions under the same license
-- **No additional restrictions** — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
 
-For the full license text, visit: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-### Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
-
-Copyright (c) 2025 QR Tools
-
-This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 
-International License. To view a copy of this license, visit 
-http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to 
-Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
-```
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
